@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cuentas recomendadas - Banco Monopoly</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <h1 class="titulo_prediccion">Cantidad de cuentas que debería tener el cliente</h1>
+    
+    <button class="info-button" onclick="mostrarInformacion()">ℹ</button>
+    
+    <div id="info-popup" class="info-popup">
+        <div class="info-content">
+            <span class="close-button" onclick="cerrarInformacion()">×</span>
+            <h2>Instrucciones</h2>
+            <ul>
+                <li><strong>CUPO_L1:</strong> Cupo de la tarjeta crédito para compras nacionales. (millón o miles de pesos)</li>
+                <li><strong>Fac_Media:</strong> Monto facturado promedio. (miles o cientos de pesos)</li>
+                <li><strong>CUPO_MX:</strong> Cupo de la tarjeta crédito para compras internacionales. (miles o cientos de pesos)</li>
+                <li><strong>Txs_Media:</strong>  Número de transacciones promedio. (número de veces)</li>
+            </ul>
+        </div>
+    </div>
+
+    {% if success %}
+        <div class="result">
+            <p>Predicción: <strong>{{ prediction }}</strong></p>
+        </div>
+    {% elif error %}
+        <div class="result error">
+            <p>Error: {{ error }}</p>
+        </div>
+    {% endif %}
+    
+    <form method="POST">
+        {% for col in ['CUPO_L1', 'Fac_Media', 'CUPO_MX', 'Txs_Media'] %}
+            <label for="{{ col }}">{{ col }}</label>
+            <input type="number" name="{{ col }}" step="any" required>
+        {% endfor %}
+        <button type="submit" class="boton_predecir">Predecir</button>
+    </form>
+
+    <script>
+        function mostrarInformacion() {
+            document.getElementById('info-popup').style.display = 'block';
+        }
+        function cerrarInformacion() {
+            document.getElementById('info-popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

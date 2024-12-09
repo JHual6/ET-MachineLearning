@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cupo de tarjeta - Banco Monopoly</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <h1 class="titulo_prediccion">Posible cupo de la tarjeta para compras nacionales</h1>
+    
+    <button class="info-button" onclick="mostrarInformacion()">ℹ</button>
+    
+    <div id="info-popup" class="info-popup">
+        <div class="info-content">
+            <span class="close-button" onclick="cerrarInformacion()">×</span>
+            <h2>Instrucciones</h2>
+            <ul>
+                <li><strong>TC:</strong> Número de tarjetas de crédito que tiene el cliente. (entre 1 y 3)</li>
+                <li><strong>Dualidad:</strong> Indicador de Dualidad (el cliente es dual si tiene 2 o más tarjetas de crédito). (entre 0 y 1)</li>
+                <li><strong>Cuentas:</strong> Número total de cuentas del cliente. (entre 1 y 3)</li>
+                <li><strong>Antiguedad_Anios:</strong> Antigüedad del cliente en años. (cantidad de años y meses)</li>
+                <li><strong>CUPO_MX:</strong> Cupo de la tarjeta crédito para compras internacionales. (entre cientos y miles)</li>
+                <li><strong>PagoNac_Media:</strong> Promedio de pagos realizados en compras nacionales. (entre cientos y miles)</li>
+                <li><strong>Fac_Media:</strong> Monto facturado promedio por el cliente en la tarjeta de crédito. (entre cientos y miles)</li>
+            </ul>
+        </div>
+    </div>
+
+    {% if success %}
+        <p>Predicción: <strong>{{ prediction }}</strong></p>
+    {% elif error %}
+        <p style="color:red;">Error: {{ error }}</p>
+    {% endif %}
+    
+    <form method="POST" class="regresion_formulario">
+        {% for col in ['TC', 'Dualidad', 'Cuentas', 'Antiguedad_Anios', 'CUPO_MX', 'PagoNac_Media', 'Fac_Media'] %}
+            <label for="{{ col }}">{{ col }}</label>
+            <input type="number" name="{{ col }}" step="any" required><br>
+        {% endfor %}
+        <button type="submit" class="boton_predecir">Predecir</button>
+    </form>
+
+    <script>
+        function mostrarInformacion() {
+            document.getElementById('info-popup').style.display = 'block';
+        }
+
+        function cerrarInformacion() {
+            document.getElementById('info-popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
